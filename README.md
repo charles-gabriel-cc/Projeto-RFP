@@ -18,3 +18,6 @@ $ pip install -r requirements.txt
 # Execute o projeto
 $ python src/main.py
 ```
+
+## Contribuição
+Veja [CONTRIBUTING.md](CONTRIBUTING.md) para detalhes.
