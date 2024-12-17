@@ -11,4 +11,4 @@ $ git clone https://github.com/seu-usuario/nome-do-repositorio.git
 Veja [Guia de Build](BUILD.md) para detalhes.
 
 ## Contribuição
-Veja [CONTRIBUTING.md](CONTRIBUTING.md) para detalhes.
+Veja [Guia de Contribuição](CONTRIBUTING.md) para detalhes.
