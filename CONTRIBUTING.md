@@ -13,7 +13,3 @@
    git push origin minha-feature
    ```
 5. Abra um **Pull Request**.
-
-## Regras
-- Sempre escreva testes unitários para novas funcionalidades.
-- Utilize boas práticas de codificação.
