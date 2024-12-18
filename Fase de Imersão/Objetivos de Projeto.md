@@ -1,15 +1,5 @@
 # Canvas de Objetivos de Projeto
 
-
-
-Preciso de ajuda para desenvolver o canvas de objetivo de um projeto. Irei fornecer a ideia inicial e, em seguida, alguns tópicos de preenchimento desse canvas. vamos por parte.
-
-De forma geral, a ideia consiste em aprimorar o processo de compras e buscas em comércios online utilizando inteligência artificial. Em alguns cenários, muitos compradores criam suas listas de compras em um papel ou bloco de notas. essas anotações podem incluir termos técnicos, a quantidade de itens e simbologias em determinadas áreas. a ideia seria criar uma plataforma capaz de capturar a imagem desse bloco de notas, contendo a listagem, e converter em uma lista ou query de busca de materiais para pesquisar a disponibilidade do mesmo em alguma plataforma de compras online. 
-
-
-
-agora, comece definindo resumidamente o objetivo estratégico geral: Descreva o objetivo principal do projeto de IA, conectando-o aos objetivos organizacionais mais amplos. Este objetivo deve ser aspiracional e refletir a visão geral do que o projeto busca alcançar em termos estratégicos.
-
 ## Instruções de Preenchimento
 
 ### 1. Objetivo Estratégico Geral
