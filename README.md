@@ -1,7 +1,8 @@
 # Projeto-RFP
+#### Grupo: Charles Gabriel, Eduardo Melo, Jailson Soares e Josef Jaeger
+
 Assistência para validação e busca de produtos em listas de compras em fornecedores versus lista de produtos
 
-### Grupo: Charles Gabriel, Eduardo Melo, Jailson Soares e Josef Jaeger
 
 ## Instalação
 ```bash
