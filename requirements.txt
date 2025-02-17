@@ -1,1 +1,23 @@
+gradio
+llama_index
+llama-index-embeddings-huggingface
+llama-index-llms-huggingface
+llama-index-readers-file
+llama-index-embeddings-instructor
+llama-index-readers-json
+instructor
+instructor[ollama]
+transformers
+sentence-transformers
+numpy
+pandas
+tqdm
+protobuf
+blobfile
+fastapi 
+uvicorn 
+requests
+setuptools
+ollama
+#pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
 
