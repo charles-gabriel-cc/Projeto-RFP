@@ -15,7 +15,7 @@ Settings.embed_model = HuggingFaceEmbedding(
 
 Settings.llm = HuggingFaceLLM(
     model_name="meta-llama/Llama-3.2-3B-Instruct",
-    tokenizers_name="meta-llama/Llama-3.2-3B-Instruct",
+    tokenizer_name="meta-llama/Llama-3.2-3B-Instruct",
     device_map="cuda:0",
     model_kwargs={
         "torch_dtype": torch.bfloat16,
@@ -30,25 +30,25 @@ json_reader = JSONReader(
 )
 
 class Agent():
-    def __init__(self, data_dir="docs", file_extractor: dict = None) -> None:
-        self.ragreranker = productRag(data_dir, file_extractor)
+    def __init__(self, data_dir="docs") -> None:
+        self.ragreranker = productRag(data_dir)
         self.chat = Chat()
         self.retrieved_Documents = {}
             
     def query(self, query_str) -> Iterator[str]:
-        context = self.ragreranker.retrieve_documents(query_str)
-        documents = [node.node.get_text() for node in context]
+        #context = self.ragreranker.retrieve(query_str)
+        #documents = [node.node.get_text() for node in context]
 
         return self.chat.query(query_str)
     
-agent = Agent(file_extractor={".jsonl": json_reader})
+agent = Agent()
 
 def chat_response(user_input):
     return agent.query(user_input)
 
 def chat_interface():
     with gr.Blocks(theme=gr.themes.Soft()) as demo:
-        gr.Markdown("# 🤖 LLama Rag Reranker")
+        gr.Markdown("# 🤖 Chatbot")
         
         chatbot = gr.Chatbot()
         user_input = gr.Textbox(placeholder="Digite sua pergunta aqui...")

@@ -14,6 +14,8 @@ class productRag():
         self.retriever: VectorIndexRetriever
         self.reranker: LLMRerank
 
+        self._start()
+
     def _start(self):
         json_reader = JSONReader(
             levels_back=None,
@@ -35,6 +37,11 @@ class productRag():
             show_progress=True
         )
 
+        self.retriever = VectorIndexRetriever(
+            index=self.index,
+            similarity_top_k=10
+        )
+
         self.reranker = LLMRerank(
             choice_batch_size=5,
             top_n=3,    
@@ -46,6 +53,5 @@ class productRag():
         retrieved_nodes = self.reranker.postprocess_nodes(
             retrieved_nodes, query_bundle
         )
-        relevant_documents = self._relevancy(query, retrieved_nodes)
 
-        return relevant_documents
+        return retrieved_nodes
