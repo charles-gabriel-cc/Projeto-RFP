@@ -3,6 +3,7 @@ from llama_index.core.memory import ChatMemoryBuffer
 from typing import Iterator
 from llama_index.core import Settings
 
+#Chatbot with stream response
 class Chat:
     def __init__(self, token_limit: int = 3000, **kwargs) -> None:
         self.memory = ChatMemoryBuffer.from_defaults(token_limit=3000, **kwargs)
