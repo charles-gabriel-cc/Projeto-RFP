@@ -5,8 +5,7 @@ from llama_index.core import PromptTemplate, Settings
 import gradio as gr
 from llama_index.readers.json import JSONReader
 from typing import Iterator
-from rag import productRag
-from chat import Chat
+from src import productRag, Chat
 
 Settings.embed_model = HuggingFaceEmbedding(
     model_name="all-MiniLM-L6-v2",
@@ -18,15 +17,24 @@ Settings.llm = HuggingFaceLLM(
     tokenizer_name="meta-llama/Llama-3.2-3B-Instruct",
     device_map="cuda:0",
     model_kwargs={
+        "temperature": 0.3,
         "torch_dtype": torch.bfloat16,
+        "do_sample": True,
     },
-    max_new_tokens=100
+    max_new_tokens=2000
 )
 
 json_reader = JSONReader(
     levels_back=None,
     is_jsonl=True,
     clean_json=True,
+)
+
+RECOMMENDATION_PROMPT = PromptTemplate(
+    """
+    Contexto: {context}
+    Questão: {question}
+    """
 )
 
 class Agent():
@@ -36,10 +44,10 @@ class Agent():
         self.retrieved_Documents = {}
             
     def query(self, query_str) -> Iterator[str]:
-        #context = self.ragreranker.retrieve(query_str)
-        #documents = [node.node.get_text() for node in context]
+        context = self.ragreranker.retrieve(query_str)
+        documents = [node.node.get_text() for node in context]
 
-        return self.chat.query(query_str)
+        return self.chat.query(query_str, documents)
     
 agent = Agent()
 
