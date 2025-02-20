@@ -17,7 +17,7 @@ Settings.llm = HuggingFaceLLM(
     tokenizer_name="meta-llama/Llama-3.2-3B-Instruct",
     device_map="cuda:0",
     model_kwargs={
-        "temperature": 0.3,
+        "temperature": 0.2,
         "torch_dtype": torch.bfloat16,
         "do_sample": True,
     },
