@@ -139,6 +139,7 @@ env.bak/
 venv.bak/
 llamaEnv/
 gradioEnv/
+images/
 
 # Spyder project settings
 .spyderproject
