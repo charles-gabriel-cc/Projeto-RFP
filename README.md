@@ -6,6 +6,7 @@ Assistência para validação e busca de produtos em listas de compras em fornec
 # Requisitos
 - **Python**: 3.10.0
 - **CUDA**: 11.8
+- **Ollama**: 11.8
 
 ## Instalação
 ```bash
@@ -21,6 +22,23 @@ $ pip install -r requirements.txt
 ```bash
 # Para rodar localmente
 $ pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
+```
+
+## Usage
+
+```python
+from llama_index.core import Settings
+
+model = "phi4:latest"
+
+Settings.embed_model = OllamaEmbedding(
+    model_name="all-minilm:latest",
+    ollama_additional_kwargs={"mirostat": 0},
+)
+
+Settings.llm = Ollama(model=model, 
+                      request_timeout=210,
+                      temperature=0.2)
 ```
 
 ## Instruções para build 
