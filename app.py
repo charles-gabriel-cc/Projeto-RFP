@@ -117,6 +117,8 @@ agent = Agent(ragreranker=ragreranker)
 
 structured_output = StructuredOutput(output_format=output_format, system_prompt="Extract all the products listed in a list of str")
 
+recommended_output = StructuredOutput(output_format=output_format, system_prompt= "You need to identify the products that are recommended, you will receive a list of products, the products indented just below the product are the recommended ones, create a list ONLY with the recommended products")
+
 def chat_response(user_input):
     return agent.query(user_input)
 
@@ -157,18 +159,22 @@ def chat_interface():
             products = structured_output.query(response.message.content)
 
             full_response = agent.query(products.product_list)
+
+            recomendation_list = recommended_output.query(full_response.text)
             
             # Debug: imprimir a resposta para verificar o que está sendo retornado
             print("OCR:", response.message.content)
             print("Instructor:", products.product_list)
             print("Resposta da llm:", full_response.text)
+            print("Lista de recomendados: ", recomendation_list.product_list)
 
             result = f""""
             OCR: {response.message.content}
             Instructor: {products.product_list}
             Response: {full_response.text}
+            Recommended list: {recomendation_list.product_list}
             """
-            return response
+            return result
 
         
         image_input.change(process_image, image_input, output_text)
