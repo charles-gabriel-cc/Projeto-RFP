@@ -5,7 +5,7 @@ Assistência para validação e busca de produtos em listas de compras em fornec
 
 # Requisitos
 - **Python**: 3.10.0
-- **CUDA**: 11.8
+- **CUDA**: 11.8 (se o modelo que você usará for executado localmente)
 - **Ollama**: 11.8
 
 ## Instalação
@@ -24,7 +24,9 @@ $ pip install -r requirements.txt
 $ pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
 ```
 
-## Usage
+## Uso
+
+Para usar o pipeline você precisa configurar o modelo escolhido, aqui usamos um modelo ollama, mas você pode configurar um modelo huggingface ou um modelo openAI, veja a documentação do llama_index para mais informações
 
 ```python
 from llama_index.core import Settings
@@ -40,9 +42,7 @@ Settings.llm = Ollama(model=model,
                       request_timeout=210,
                       temperature=0.2)
 ```
-
-## Instruções para build 
-Veja [Guia de Build](BUILD.md) para detalhes.
+$ python app.py
 
 ## Contribuição
 Veja [Guia de Contribuição](CONTRIBUTING.md) para detalhes.
