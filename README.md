@@ -43,6 +43,8 @@ Settings.llm = Ollama(model=model,
                       temperature=0.2)
 ```
 Depois deve-se criar uma pasta docs para armazenar os arquivos que serão processados no RAG, é possivel definir loaders especificos para outros formatos, mas deve-se usar JSON ou txt
+
+Para rodar a interface com o gradio basta usar:
 ```
 $ python app.py
 ```
