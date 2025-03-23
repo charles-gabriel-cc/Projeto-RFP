@@ -1,6 +1,7 @@
 import torch
-from llama_index.embeddings.ollama import OllamaEmbedding
-from llama_index.llms.ollama import Ollama
+
+from llama_index.llms.openai import OpenAI
+from llama_index.embeddings.openai import OpenAIEmbedding
 from llama_index.core import PromptTemplate, Settings
 import gradio as gr
 from llama_index.readers.json import JSONReader
@@ -14,7 +15,10 @@ import requests
 from PIL import Image
 import os
 
-import ollama
+from dotenv import load_dotenv
+load_dotenv()
+
+import openai
 
 
 class output_format(BaseModel):
@@ -59,18 +63,14 @@ RECOMMENDATION_PROMPT = PromptTemplate(
 
 model = "phi4:latest"
 
-Settings.embed_model = OllamaEmbedding(
-    model_name="all-minilm:latest",
-    ollama_additional_kwargs={"mirostat": 0},
+Settings.embed_model = OpenAIEmbedding(model="text-embedding-ada-002")
+
+llm = OpenAI(
+    model="gpt-3.5-turbo", 
+    temperature=0.7,
 )
 
-Settings.llm = Ollama(model=model, 
-                      request_timeout=210,
-                      temperature=0.2)
-
-vision_model = Ollama(model="llama3.2-vision:11b", 
-                      request_timeout=210,
-                      temperature=0.2)
+vision_model = OpenAI(model="gpt-4-turbo", temperature=0.2)
 
 json_reader = JSONReader(
     levels_back=None,
@@ -147,16 +147,24 @@ def chat_interface():
             
             #query = SYSTEM_PROMPT.format(image=encoded_image)
             # Chamar a LLM e capturar a resposta
-            response = ollama.chat(
-                model='llama3.2-vision:11b',
-                messages=[{
-                    'role': 'user',
-                    'content': SYSTEM_PROMPT,
-                    'images': [save_path]
-                }]
+            
+            client = openai.Client(api_key=os.environ['OPENAI_API_KEY'],) 
+
+            response = client.chat.completions.create(
+                model="gpt-3.5-turbo",
+                messages=[
+                    {"role": "system", "content": "Analyze the following image:"},
+                    {"role": "user", "content": "Provide an analysis based on the image provided."}
+                ],
+                temperature=0.2
             )
 
-            products = structured_output.query(response.message.content)
+            reponse_content = response.choices[0].message.content
+            print("=====================")
+            print(reponse_content)
+            print("=====================")
+
+            products = structured_output.query(reponse_content)
 
             full_response = agent.query(products.product_list)
 
