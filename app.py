@@ -36,7 +36,7 @@ RECOMMENDATION_PROMPT = PromptTemplate(
         - Use available product information to justify your recommendation.  
         - Do not describe your analysis process.  
         - You need to strict response as the format described below.
-        - ALWAYS respond in the same language as the user and translate the response format to the user's language.
+        - ALWAYS respond in the same language as the user and translate the response format to the user's language: Possible languages: "English", "Brazilian Portuguese".
 
         Format your response for better readability using bullet points and bold text. Example format:
 
