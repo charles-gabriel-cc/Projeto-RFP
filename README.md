@@ -1,7 +1,7 @@
 # Projeto-RFP
 #### Grupo: Charles Gabriel, Eduardo Melo, Jailson Soares e Josef Jaeger
 
-Assistência para validação e busca de produtos em listas de compras em fornecedores versus lista de produtos
+Aplicativo que implementa ocr + raga para assistência, validação e busca de produtos em listas de compras em um estoque, recomendando produtos existentes ou similares a produtos existentes na lista e contexto recuperado
 
 # Requisitos
 - **Python**: 3.10.0
@@ -42,7 +42,9 @@ Settings.llm = Ollama(model=model,
                       request_timeout=210,
                       temperature=0.2)
 ```
-$ python app.py
+Depois deve-se criar uma pasta docs para armazenar os arquivos que serão processados no RAG, é possivel definir loaders especificos para outros formatos, mas deve-se usar JSON ou txt
 
-## Contribuição
-Veja [Guia de Contribuição](CONTRIBUTING.md) para detalhes.
+Para rodar a interface com o gradio basta usar:
+```
+$ python app.py
+```
