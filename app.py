@@ -127,12 +127,21 @@ def clear_and_restart():
     agent = Agent(ragreranker=ragreranker)
     return None
 
+def clear_fields():
+    # Retorna None para o componente de imagem e "" para o textbox
+    return None, ""
+
 def chat_interface():
     with gr.Blocks(theme=gr.themes.Soft()) as demo:
         gr.Markdown("# 🤖 OCR Assistant")
         
         image_input = gr.Image(type="filepath", label="Envie sua imagem aqui...")
         output_text = gr.Textbox(label="Resposta da LLM", interactive=False)
+
+        clear_button = gr.Button("Limpar")
+    
+        # Ao clicar no botão, a função clear_fields é chamada e os outputs são atualizados
+        clear_button.click(fn=clear_fields, inputs=[], outputs=[image_input, output_text])
         
         def process_image(image_path):
             # Verificar se image_path é None
@@ -140,6 +149,7 @@ def chat_interface():
                 return "Nenhuma imagem foi enviada."
 
             # Criar a pasta 'images' se não existir
+            print("Imagem recebida")
             os.makedirs('images', exist_ok=True)
 
             # Salvar a imagem na pasta 'images'
@@ -147,6 +157,9 @@ def chat_interface():
             
             #query = SYSTEM_PROMPT.format(image=encoded_image)
             # Chamar a LLM e capturar a resposta
+            image = Image.open(image_path)
+            image.save(save_path)
+            
             response = ollama.chat(
                 model='llama3.2-vision:11b',
                 messages=[{
@@ -155,26 +168,28 @@ def chat_interface():
                     'images': [save_path]
                 }]
             )
+            try:
+                products = structured_output.query(response.message.content)
 
-            products = structured_output.query(response.message.content)
+                full_response = agent.query(products.product_list)
 
-            full_response = agent.query(products.product_list)
+                #recomendation_list = recommended_output.query(full_response.text)
+                
+                # Debug: imprimir a resposta para verificar o que está sendo retornado
+                print("OCR:", response.message.content)
+                print("Instructor:", products.product_list)
+                print("Resposta da llm:", full_response.text)
+                #print("Lista de recomendados: ", recomendation_list.product_list)
 
-            recomendation_list = recommended_output.query(full_response.text)
-            
-            # Debug: imprimir a resposta para verificar o que está sendo retornado
-            print("OCR:", response.message.content)
-            print("Instructor:", products.product_list)
-            print("Resposta da llm:", full_response.text)
-            print("Lista de recomendados: ", recomendation_list.product_list)
-
-            result = f""""
-            OCR: {response.message.content}
-            Instructor: {products.product_list}
-            Response: {full_response.text}
-            Recommended list: {recomendation_list.product_list}
-            """
-            return result
+                result = f""""
+                OCR: {response.message.content}
+                Instructor: {products.product_list}
+                Response: {full_response.text}
+                """
+                #Recommended list: {recomendation_list.product_list}
+                return result
+            except:
+                return "Envie sua lista de pedidos 😉"
 
         
         image_input.change(process_image, image_input, output_text)
